@@ -23,18 +23,59 @@
         <meta name="format-detection" content="telephone=no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Hello World</title>
     </head>
     <body>
-        <div class="app">
+        <div class="container">
+            <div class="row">
+                <div class="page-header">
+                    <h1>Mis tareas
+                    </h1>
+                </div>
+            </div>
+
+            <div class="row well">
+                <div class="form-group">
+                    <label for="new_todo">Nueva Tarea</label>
+                    <input type="text" class="form-control" id="new_todo" name="new_todo" placeholder="Crear una nueva tarea...">
+                  </div>
+            </div>
+
+            <div class="row well">
+                <table id="todos" class="table table-hover table-striped">
+                    <tbody id="todo-list">
+                        <tr>
+                            <td><input type="checkbox" checked="checked"></td>
+                            <td>Crear nueva tarea</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Crear estructura base</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Instalar phonegap</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>Instalar xcode</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- <div class="app">
             <h1>PhoneGap</h1>
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-        </div>
+        </div> -->
         <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
