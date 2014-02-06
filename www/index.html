@@ -43,12 +43,14 @@
                 <label class="panel-title" for="new_todo">Nueva Tarea</label>
             </div>
             <div class="panel-body">
+            <form action="/" id="add_form">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="new_todo" name="new_todo" placeholder="Crear una nueva tarea...">
+                    <input type="text" class="form-control" id="new_todo" name="todo-name" placeholder="Crear una nueva tarea...">
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-plus"></span> Agregar</button>
+                    <button type="submit" class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-plus"></span> Agregar</button>
                 </div>
+            </form>
             </div>
         </div>
 
@@ -58,18 +60,6 @@
             </div>
             <table id="todo_list" class="todo-list table table-hover table-striped">
                 <tbody>
-                    <tr>
-                        <td>
-                            <input type="checkbox" id="todo_1">
-                        </td>
-                        <td><label for="todo_1">Enviar correos</label></td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>
-                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -80,18 +70,6 @@
             </div>
             <table id="done_list" class="todo-list table table-hover table-striped">
                 <tbody>
-                    <tr>
-                        <td>
-                            <input type="checkbox" id="done_1" checked="checked">
-                        </td>
-                        <td><label for="done_1">Crear primera tarea</label></td>
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-edit"></span></button>
-                                <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -109,6 +87,9 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
     app.initialize();
+    var my_todos = TODO($('#add_form'), $('#todo_list'), $('#done_list'));
+    my_todos.addTask("Crear primera tarea", true);
+    my_todos.addTask("Enviar mail de contenidos");
     </script>
 </body>
 
