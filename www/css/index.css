@@ -59,7 +59,7 @@ body {
     to { opacity: 1.0; }
 }
 
-
+.row { margin-left: 0; margin-right: 0; }
 .todo-list>thead>tr>th,
 .todo-list>tbody>tr>th,
 .todo-list>tfoot>tr>th,

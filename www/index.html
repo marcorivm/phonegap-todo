@@ -33,46 +33,46 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="page-header">
-                <h1>Mis tareas</h1>
-            </div>
-        </div>
-
-        <div class="row panel panel-info">
-            <div class="panel-heading">
-                <label class="panel-title" for="new_todo">Nueva Tarea</label>
-            </div>
-            <div class="panel-body">
-            <form action="/" id="add_form">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="new_todo" name="todo-name" placeholder="Crear una nueva tarea...">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <label class="panel-title" for="new_todo">Nueva Tarea</label>
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-lg btn-block"><span class="glyphicon glyphicon-plus"></span> Agregar</button>
+                <div class="panel-body">
+                    <form action="/" id="add_form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="new_todo" name="todo-name" placeholder="Crear una nueva tarea...">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">
+                                <span class="glyphicon glyphicon-plus"></span>Agregar</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Tareas por hacer</h3>
+                </div>
+                <table id="todo_list" class="todo-list table table-hover table-striped">
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Tareas terminadas</h3>
+                </div>
+                <table id="done_list" class="todo-list table table-hover table-striped">
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <div class="row panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title">Tareas por hacer</h3>
-            </div>
-            <table id="todo_list" class="todo-list table table-hover table-striped">
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="row panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Tareas terminadas</h3>
-            </div>
-            <table id="done_list" class="todo-list table table-hover table-striped">
-                <tbody>
-                </tbody>
-            </table>
-        </div>
     </div>
     <!-- <div class="app">
             <h1>PhoneGap</h1>
