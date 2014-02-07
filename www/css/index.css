@@ -78,3 +78,6 @@ body {
     text-align: center;
     width: 100px;
 }
+.todo-list>tbody>tr>td:first-child {
+    width: 30px;
+}

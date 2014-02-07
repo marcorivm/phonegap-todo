@@ -19,7 +19,6 @@
 var TODO = function($form, $todo, $done) {
     var tasks = [];
     var TASK =  function(attributes) {
-
         // Define TASK obj
         var obj = {
             attributes: {
@@ -73,7 +72,6 @@ var TODO = function($form, $todo, $done) {
             onUpdate: attributes.onUpdate,
             $el: $('<tr>')
         };
-
         return obj.update();
     };
 
@@ -105,14 +103,17 @@ var TODO = function($form, $todo, $done) {
                 task.$el.remove();
                 $todo.append(task.$el);
             }
-        },
-        'tasks': tasks
+        }
     };
 
     $form.on('submit', function () {
         var $input = $form.find('input[name="todo-name"]');
-        obj.addTask($input.val());
-        $input.val('');
+        if($input.val().length > 0) {
+            obj.addTask($input.val());
+            $input.val('');
+        } else {
+            alert('Ingresa una tarea!');
+        }
         return false;
     });
 
