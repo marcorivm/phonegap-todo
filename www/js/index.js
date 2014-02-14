@@ -21,6 +21,7 @@ var TODO = function($form, $todo, $done, storage_name) {
     var task_template = '<td>' +
                         '<input type="checkbox" class="check-todo" id="todo_{{ID}}" {{STATUS}}>' +
                     '</td>' +
+                    '<td><img src="{{IMAGE}}" height="30"></td>' +
                     '<td><label for="todo_{{ID}}">{{NAME}}</label></td>' +
                     '<td>' +
                         '<div class="btn-group">' +
@@ -35,12 +36,14 @@ var TODO = function($form, $todo, $done, storage_name) {
             attributes: {
                 'id' : attributes.id,
                 'name': attributes.name,
-                'status': ((attributes.done)? 'checked="checked"' : 'uncheked')
+                'status': ((attributes.done)? 'checked="checked"' : 'uncheked'),
+                'image': attributes.image
             },
             render: function() {
                 var skeleton = task_template;
                 skeleton = skeleton.replace(/{{ID}}/g, this.attributes.id);
                 skeleton = skeleton.replace(/{{NAME}}/g, this.attributes.name);
+                skeleton = skeleton.replace(/{{IMAGE}}/g, this.attributes.image);
                 skeleton = skeleton.replace(/{{STATUS}}/g, this.attributes.status);
                 $el.html(skeleton);
                 return this;
@@ -87,23 +90,24 @@ var TODO = function($form, $todo, $done, storage_name) {
             var json_tasks = JSON.stringify(tasks);
             window.localStorage.setItem(this.storage_name, json_tasks);
         },
-        _addTask: function(name, done) {
+        _addTask: function(attributes) {
             var new_task = TASK({
-                'name': name,
-                'done': done,
+                'name': attributes.name,
+                'done': attributes.done,
+                'image': attributes.image,
                 'id': tasks.length,
                 'onDelete': this.removeTask,
                 'onUpdate': this.updateTaskStatus
             });
             tasks.push(new_task);
-            if(done) {
+            if(attributes.done) {
                 $done.append(new_task.getElement());
             } else {
                 $todo.append(new_task.getElement());
             }
         },
-        addTask: function (name, done) {
-            this._addTask(name,done);
+        addTask: function (attributes) {
+            this._addTask(attributes);
 
             obj.saveToStorage();
         },
@@ -130,17 +134,32 @@ var TODO = function($form, $todo, $done, storage_name) {
                 for (var i = stored_tasks.length - 1; i >= 0; i--) {
                     var done = stored_tasks[i].attributes.status == 'checked="checked"';
                     var name = stored_tasks[i].attributes.name;
-                    this._addTask(name, done);
+                    var image = stored_tasks[i].attributes.image;
+                    this._addTask({name: name, done: done, image: image});
                 };
                 this.saveToStorage();
             }
         }
     };
-
+    $form.on('click', '#open_camera', function() {
+        navigator.camera.getPicture(function(image){
+            $('#image_container').attr('src', image);
+            $('#image_src').val(image);
+        },
+        function(error){console.log(error)},
+        { quality: 50, destinationType: Camera.DestinationType.FILE_URI,  saveToPhotoAlbum: true});
+    });
     $form.on('submit', function () {
         var $input = $form.find('input[name="todo-name"]');
         if($input.val().length > 0) {
-            obj.addTask($input.val());
+            var $image_src = $('#image_src');
+            if($image_src.val().length > 0) {
+                obj.addTask({name: $input.val(), image: $image_src.val()});
+                $image_src.val('');
+                $('#image_container').attr('src', '');
+            } else {
+                obj.addTask({name: $input.val()});
+            }
             $input.val('');
         } else {
             alert('Ingresa una tarea!');

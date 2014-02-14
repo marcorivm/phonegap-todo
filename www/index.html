@@ -40,10 +40,14 @@
                 <div class="panel-body">
                     <form action="/" id="add_form">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="new_todo" name="todo-name" placeholder="Crear una nueva tarea...">
+                            <img src="" alt="" id="image_container" height="100" width="100">
+                            <input type="hidden" id="image_src">
+                            <input type="text" class="form-control col-sm-10" id="new_todo" name="todo-name" placeholder="Crear una nueva tarea...">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-lg btn-block">
+                            <button type="button" id="open_camera" class="btn btn-primary btn-lg">
+                                <span class="glyphicon glyphicon-camera"></span> Tomar foto</button>
+                            <button type="submit" class="btn btn-success btn-lg">
                                 <span class="glyphicon glyphicon-plus"></span> Agregar</button>
                         </div>
                     </form>
