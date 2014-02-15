@@ -16,32 +16,33 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var TODO = function($form, $todo, $done) {
+var TODO = function($form, $todo, $done, storage_name) {
     var tasks = [];
+    var template =  '<td>' +
+                        '<input type="checkbox" class="check-todo" id="todo_{{ID}}" {{STATUS}}>' +
+                    '</td>' +
+                    '<td><label for="todo_{{ID}}">{{NAME}}</label></td>' +
+                    '<td>' +
+                        '<div class="btn-group">' +
+                            '<button type="button" class="btn btn-info edit-todo"><span class="glyphicon glyphicon-edit"></span></button>' +
+                            '<button type="button" class="btn btn-danger delete-todo"><span class="glyphicon glyphicon-trash"></span></button>' +
+                        '</div>' +
+                    '</td>';
     var TASK =  function(attributes) {
         // Define TASK obj
+        var $el = $('<tr>');
         var obj = {
             attributes: {
                 'id' : attributes.id,
                 'name': attributes.name,
                 'status': ((attributes.done)? 'checked="checked"' : 'uncheked')
             },
-            template: '<td>' +
-                            '<input type="checkbox" class="check-todo" id="todo_{{ID}}" {{STATUS}}>' +
-                        '</td>' +
-                        '<td><label for="todo_{{ID}}">{{NAME}}</label></td>' +
-                        '<td>' +
-                            '<div class="btn-group">' +
-                                '<button type="button" class="btn btn-info edit-todo"><span class="glyphicon glyphicon-edit"></span></button>' +
-                                '<button type="button" class="btn btn-danger delete-todo"><span class="glyphicon glyphicon-trash"></span></button>' +
-                            '</div>' +
-                        '</td>',
             render: function() {
-                var skeleton = this.template;
+                var skeleton = template;
                 skeleton = skeleton.replace(/{{ID}}/g, this.attributes.id);
                 skeleton = skeleton.replace(/{{NAME}}/g, this.attributes.name);
                 skeleton = skeleton.replace(/{{STATUS}}/g, this.attributes.status);
-                this.$el.html(skeleton);
+                this.getElement().html(skeleton);
                 return this;
             },
             update: function() {
@@ -52,15 +53,15 @@ var TODO = function($form, $todo, $done) {
             },
             bindEvents: function() {
                 var obj = this;
-                obj.$el.on('click', '.delete-todo', function() {
-                    obj.$el.remove();
+                obj.getElement().on('click', '.delete-todo', function() {
+                    obj.getElement().remove();
                     obj.onDelete(obj);
                 });
-                obj.$el.on('click', '.edit-todo', function() {
+                obj.getElement().on('click', '.edit-todo', function() {
                     obj.attributes.name = prompt("Nuevo nombre");
                     obj.update();
                 });
-                obj.$el.on('click', '.check-todo', function() {
+                obj.getElement().on('click', '.check-todo', function() {
                     obj.attributes.status = (this.checked)? 'checked="checked"' : 'uncheked';
                     obj.update();
                 });
@@ -70,14 +71,17 @@ var TODO = function($form, $todo, $done) {
             },
             onDelete: attributes.onDelete,
             onUpdate: attributes.onUpdate,
-            $el: $('<tr>')
+            getElement: function() {
+                return $el;
+            }
         };
         return obj.update();
     };
 
     // Define TODO obj
     var obj = {
-        addTask: function (name, done) {
+        tasks: tasks,
+        addTask: function(name, done) {
             var new_task = TASK({
                 'name': name,
                 'done': done,
@@ -87,24 +91,44 @@ var TODO = function($form, $todo, $done) {
             });
             tasks.push(new_task);
             if(done) {
-                $done.append(new_task.$el);
+                $done.append(new_task.getElement());
             } else {
-                $todo.append(new_task.$el);
+                $todo.append(new_task.getElement());
             }
+            obj.saveToStorage();
         },
         removeTask: function(task) {
             tasks[task.attributes.id] = undefined;
+            obj.saveToStorage();
         },
         updateTaskStatus: function(task) {
-            if(task.isDone() && $todo.find(task.$el)) {
-                task.$el.remove();
-                $done.append(task.$el);
-            } else if(!task.isDone() && $done.find(task.$el)) {
-                task.$el.remove();
-                $todo.append(task.$el);
-            }
+            if(task.isDone() && $todo.find(task.getElement())) {
+                task.getElement().remove();
+                $done.append(task.getElement());
+            } else if(!task.isDone() && $done.find(task.getElement())) {
+                task.getElement().remove();
+                $todo.append(task.getElement());
+            };
+            obj.saveToStorage();
+        },
+        saveToStorage: function() {
+            var json_tasks = JSON.stringify(tasks);
+            window.localStorage.setItem(storage_name, json_tasks)
+        },
+        loadFromStorage: function() {
+            // Obtener string en json
+            var json_tasks = window.localStorage.getItem(storage_name);
+            // Parsear string con json
+            var new_tasks = JSON.parse(json_tasks);
+            // Agregar cada tarea a la aplicación
+            for (var i = 0; i < new_tasks.length; i++) {
+                var done = new_tasks[i].attributes.status === 'checked="checked"';
+                this.addTask(new_tasks[i].attributes.name, done);
+            };
         }
     };
+
+    obj.loadFromStorage();
 
     $form.on('submit', function () {
         var $input = $form.find('input[name="todo-name"]');

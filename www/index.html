@@ -79,9 +79,12 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
     app.initialize();
-    var my_todos = TODO($('#add_form'), $('#todo_list'), $('#done_list'));
-    my_todos.addTask("Crear primera tarea", true);
-    my_todos.addTask("Enviar mail de contenidos");
+    var my_todos = TODO(
+        $('#add_form'),
+        $('#todo_list'),
+        $('#done_list'),
+        'my_todos'
+    );
     </script>
 </body>
 
