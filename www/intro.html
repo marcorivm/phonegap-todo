@@ -32,47 +32,42 @@
 
 <body>
     <div class="container">
-        <div class="row">   
-            <a href="intro.html" class="btn btn-lg btn-block btn-info"><span class="glyphicon glyphicon-arrow-left"></span>  Regresar</a>   
-        </div>
         <div class="row">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <label class="panel-title" for="new_todo">Nueva Tarea</label>
+                    <h1>Mis tareas</h1>
                 </div>
                 <div class="panel-body">
-                    <form action="/" id="add_form">
+                    <form action="index.html" id="">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="new_todo" name="todo-name" placeholder="Crear una nueva tarea...">
+                            <select class="form-control" name="todo" id="list_select">
+                                <option value="my_todos">My todos</option>  
+                            </select>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-lg btn-block">
-                                <span class="glyphicon glyphicon-plus"></span> Agregar</button>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                <span class="glyphicon glyphicon-list-alt"></span> Abrir listar</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="panel panel-primary">
+            <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Tareas por hacer</h3>
+                    <h1>Agregar nueva lista</h1>
                 </div>
-                <table id="todo_list" class="todo-list table table-hover table-striped">
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Tareas terminadas</h3>
+                <div class="panel-body">
+                    <form action="index.html">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="todo">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-lg btn-block">
+                                <span class="glyphicon glyphicon-plus"></span> Crear y abrir listar</button>
+                        </div>
+                    </form>
                 </div>
-                <table id="done_list" class="todo-list table table-hover table-striped">
-                    <tbody>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -82,22 +77,17 @@
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
     app.initialize();
-    function getQueryVariable(variable, default_value) {
-           var query = window.location.search.substring(1);
-           var vars = query.split("&");
-           for (var i=0;i<vars.length;i++) {
-                   var pair = vars[i].split("=");
-                   if(pair[0] == variable){return pair[1];}
-           }
-           return default_value;
-    }
 
-    var my_todos = TODO(
-        $('#add_form'),
-        $('#todo_list'),
-        $('#done_list'),
-        getQueryVariable('todo', 'my_todos')
-    );
+    var loadTodoLists = function() {
+        var lists = [];
+        for(list in window.localStorage) {
+            if(list !== undefined) {
+                lists.push("<option value='" + list + "'>" + list + "</option>");
+            }
+        }
+        $("#list_select").append(lists.join());
+    }
+    loadTodoLists();    
     </script>
 </body>
 

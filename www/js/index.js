@@ -118,13 +118,15 @@ var TODO = function($form, $todo, $done, storage_name) {
         loadFromStorage: function() {
             // Obtener string en json
             var json_tasks = window.localStorage.getItem(storage_name);
-            // Parsear string con json
-            var new_tasks = JSON.parse(json_tasks);
-            // Agregar cada tarea a la aplicación
-            for (var i = 0; i < new_tasks.length; i++) {
-                var done = new_tasks[i].attributes.status === 'checked="checked"';
-                this.addTask(new_tasks[i].attributes.name, done);
-            };
+            if(json_tasks != null && json_tasks.length > 0) {
+                // Parsear string con json
+                var new_tasks = JSON.parse(json_tasks);
+                // Agregar cada tarea a la aplicación
+                for (var i = 0; i < new_tasks.length; i++) {
+                    var done = new_tasks[i].attributes.status === 'checked="checked"';
+                    this.addTask(new_tasks[i].attributes.name, done);
+                }
+            }
         }
     };
 

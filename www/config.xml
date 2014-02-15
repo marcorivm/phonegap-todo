@@ -1,12 +1,13 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.phonegap.helloworld" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>HelloWorld</name>
+<widget id="mx.scitus.mytodos" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Todo lists</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Todo list app
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="markœ@scitus.mx" href="http://scitus.mx">
+        Marco Rivadeneyra
     </author>
+    <content src="intro.html" />
     <feature name="http://api.phonegap.com/1.0/device" />
     <preference name="permissions" value="none" />
     <preference name="orientation" value="default" />
@@ -35,7 +36,7 @@
     <icon gap:platform="ios" height="114" src="res/icon/ios/icon-57-2x.png" width="114" />
     <icon gap:platform="ios" height="144" src="res/icon/ios/icon-72-2x.png" width="144" />
     <icon gap:platform="webos" src="res/icon/webos/icon-64.png" />
-    <icon gap:platform="winphone" src="res/icon/windows-phone/icon-48.png" />
+    <icon gap:platform="winphone" src="res/icon/w   ows-phone/icon-48.png" />
     <icon gap:platform="winphone" gap:role="background" src="res/icon/windows-phone/icon-173.png" />
     <gap:splash gap:density="ldpi" gap:platform="android" src="res/screen/android/screen-ldpi-portrait.png" />
     <gap:splash gap:density="mdpi" gap:platform="android" src="res/screen/android/screen-mdpi-portrait.png" />
